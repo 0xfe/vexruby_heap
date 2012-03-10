@@ -12,3 +12,32 @@ The above copyright notice and this permission notice shall be included in all c
 
 THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 -------------
+
+To Build:
+
+$ gem build vexruby_heap.gemspec
+
+To push to Rubygems.org:
+
+$ gem push vexruby_heap-0.x.x.gem
+
+-------------
+
+Usage:
+
+  require 'rubygems'
+  require 'vexruby_heap'
+
+  h = Vex::Heap.new
+
+  h.empty?  # returns true
+
+  h.insert(10)
+  h.insert(20)
+  h.insert(15)
+
+  h.peek    # returns 20
+  h.remove  # returns 20
+  h.peek    # returns 15
+
+  h.size    # returns 2

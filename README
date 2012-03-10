@@ -1,17 +1,8 @@
 VexRuby Heap
 Copyright (c) 2012 Mohit Cheppudira
 
-A Binary-Heap / Priority-Queue implementation for Ruby.
-
--------------
-The MIT License (MIT)
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
--------------
+A Binary-Heap / Priority-Queue implementation for Ruby. Supports min-heap,
+max-heap, and custom comparators.
 
 To build:
 
@@ -29,14 +20,14 @@ To push to Rubygems.org:
 
 $ gem push vexruby_heap-0.x.x.gem
 
--------------
+Classes:
+
+  MaxHeap - Keeps largest value on top of heap.
+  MinHeap - Keeps smallest value on top of heap.
+  Heap - Allows you to customize the comparator.
 
 Usage:
-
-  require 'rubygems'
-  require 'vexruby_heap'
-
-  h = Vex::Heap.new
+  h = Vex::MaxHeap.new
 
   h.empty?  # returns true
 
@@ -44,8 +35,24 @@ Usage:
   h.insert(20)
   h.insert(15)
 
-  h.peek    # returns 20
+  h.peek  # returns 20
   h.remove  # returns 20
-  h.peek    # returns 15
+  h.peek  # returns 15
 
-  h.size    # returns 2
+  h.size  # returns 2
+
+You can customize the heap by passing in a custom comparator to Heap.
+
+  my_min_heap = Vex::Heap.new(proc {|a, b| b < a})
+
+In fact, this is how MaxHeap and MinHeap are implemented.
+
+----------
+
+The MIT License (MIT)
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.

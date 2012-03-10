@@ -4,9 +4,13 @@ module Vex
 Implementation of ruby binary-heap / priority queue.
 Author: Mohit Cheppudira <mohit@muthanna.com>
 
-Usage:
+Classes:
+  MaxHeap - Keeps largest value on top of heap.
+  MinHeap - Keeps smallest value on top of heap.
+  Heap - Allows you to customize the comparator.
 
-  h = Vex::Heap.new
+Usage:
+  h = Vex::MaxHeap.new
 
   h.empty?  # returns true
 
@@ -19,13 +23,25 @@ Usage:
   h.peek  # returns 15
 
   h.size  # returns 2
+
+You can customize the heap by passing in a custom comparator to Heap.
+
+  my_min_heap = Vex::Heap.new(proc {|a, b| b < a})
+
+In fact, this is how MaxHeap and MinHeap are implemented.
 =end
 
 class Heap
   attr_reader :data
 
-  def initialize
+  def initialize(comparator=nil)
     @data = []
+
+    if comparator.nil?
+      @comparator = proc { |a, b| a < b }
+    else
+      @comparator = comparator
+    end
   end
 
   def empty?
@@ -40,13 +56,17 @@ class Heap
     @data.first
   end
 
+  def compare(a, b)
+    return @comparator.call(a, b)
+  end
+
   def insert(item)
     @data << item
     pos = @data.length - 1
     while pos != 0
       parent = ((pos + 1) / 2).floor - 1
 
-      if @data[parent] < @data[pos]
+      if compare(@data[parent], @data[pos])
         @data[pos], @data[parent] = @data[parent], @data[pos]
         pos = parent
       else
@@ -71,10 +91,10 @@ class Heap
       break if left >= size
 
       if right < size then
-        next_child = right if @data[right] > @data[left]
+        next_child = right unless compare(@data[right], @data[left])
       end
 
-      if @data[next_child] > @data[pos] then
+      if not compare(@data[next_child], @data[pos]) then
         @data[next_child], @data[pos] = @data[pos], @data[next_child]
         pos = next_child
       else
@@ -87,6 +107,18 @@ class Heap
 
   alias :pop :remove
   alias :push :insert
+end
+
+class MaxHeap < Heap
+  def initialize
+    super
+  end
+end
+
+class MinHeap < Heap
+  def initialize
+    super(proc { |a, b| b < a })
+  end
 end
 
 end

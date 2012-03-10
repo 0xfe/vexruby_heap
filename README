@@ -17,6 +17,10 @@ To build:
 
 $ gem build vexruby_heap.gemspec
 
+To test:
+
+$ rake test
+
 To install:
 
 $ gem install vexruby_heap-0.x.gem

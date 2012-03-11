@@ -45,8 +45,6 @@ You can customize the heap by passing in a custom comparator to Heap.
 
   my_min_heap = Vex::Heap.new(proc {|a, b| b < a})
 
-In fact, this is how MaxHeap and MinHeap are implemented.
-
 ----------
 
 The MIT License (MIT)

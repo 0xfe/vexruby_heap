@@ -27,8 +27,6 @@ Usage:
 You can customize the heap by passing in a custom comparator to Heap.
 
   my_min_heap = Vex::Heap.new(proc {|a, b| b < a})
-
-In fact, this is how MaxHeap and MinHeap are implemented.
 =end
 
 class Heap
@@ -63,7 +61,7 @@ class Heap
   def insert(item)
     @data << item
     pos = @data.length - 1
-    while pos != 0
+    while pos > 0
       parent = ((pos + 1) / 2).floor - 1
 
       if compare(@data[parent], @data[pos])
@@ -83,23 +81,21 @@ class Heap
     retval, @data[0] = @data[0], @data.pop
 
     pos = 0
-    while true
+    loop do
       left = ((pos + 1) * 2) - 1
       right = left + 1
       next_child = left
 
       break if left >= size
 
-      if right < size then
+      if right < size
         next_child = right unless compare(@data[right], @data[left])
       end
 
-      if not compare(@data[next_child], @data[pos]) then
-        @data[next_child], @data[pos] = @data[pos], @data[next_child]
-        pos = next_child
-      else
-        break
-      end
+      break if compare(@data[next_child], @data[pos])
+
+      @data[next_child], @data[pos] = @data[pos], @data[next_child]
+      pos = next_child
     end
 
     return retval
@@ -110,14 +106,14 @@ class Heap
 end
 
 class MaxHeap < Heap
-  def initialize
-    super
+  def compare(a, b)
+    return a < b
   end
 end
 
 class MinHeap < Heap
-  def initialize
-    super(proc { |a, b| b < a })
+  def compare(a, b)
+    return b < a
   end
 end
 
